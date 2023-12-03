@@ -1,0 +1,12 @@
+package files
+
+import (
+	"embed"
+	_ "embed"
+)
+
+//go:embed static
+var Static embed.FS
+
+//go:embed templates
+var Templates embed.FS
