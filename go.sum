@@ -7,10 +7,8 @@ github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da h1:oI5xCqsCo564l
 github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da/go.mod h1:cIg4eruTrX1D+g88fzRXU5OdNfaM+9IcxsU14FzY7Hc=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
-github.com/kenowi-dev/hspscraper v0.1.2 h1:LtuQOVQdmZOOpbE9TL0rwVMYl2dA+sfUEw7/AEQTq9Y=
-github.com/kenowi-dev/hspscraper v0.1.2/go.mod h1:fpQkbS45eOjIqXaFbtiN5leeVXZef0E51thTYtJapKM=
-github.com/kenowi-dev/observer v0.1.0 h1:jSEbeir/45LeP0q6XMigbq0nB7V4d2XriyYoWGGD7pQ=
-github.com/kenowi-dev/observer v0.1.0/go.mod h1:itcvd8VwUSs7avtIZ9IQxHF0/+6hqpwjppO1+p7nF5E=
+github.com/kenowi-dev/hspscraper v0.1.4 h1:jJqWAjc59ObCHs6IbY7XYYNqvxQRjrVtiAVrD9wsFmI=
+github.com/kenowi-dev/hspscraper v0.1.4/go.mod h1:qtCgeRmXvggcdnOx7bpw1mjmUQvd3+NTF53GMOJoviw=
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
 github.com/spf13/cobra v1.8.0 h1:7aJaZx1B85qltLMc546zn58BxxfZdR/W22ej9CFoEf0=
 github.com/spf13/cobra v1.8.0/go.mod h1:WXLWApfZ71AjXPya3WOlMsY9yMs7YeiHhFVlvLyhcho=

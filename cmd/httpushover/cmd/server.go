@@ -2,8 +2,6 @@ package cmd
 
 import (
 	"github.com/kenowi-dev/hsp-auto-login/pkg/api"
-	"github.com/kenowi-dev/hsp-auto-login/pkg/db"
-	"github.com/kenowi-dev/hsp-auto-login/pkg/hsp"
 	"github.com/spf13/cobra"
 )
 
@@ -28,12 +26,6 @@ func init() {
 
 func runServer(_ *cobra.Command, _ []string) {
 
-	database, err := db.New[hsp.Data]("db.json")
-	h := hsp.New(database)
-
-	if err != nil {
-		panic(err)
-	}
-	a := api.New(h)
+	a := api.New()
 	a.SetupAndRun(serverConfig.port)
 }

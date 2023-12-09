@@ -3,8 +3,7 @@ module github.com/kenowi-dev/hsp-auto-login
 go 1.21.3
 
 require (
-	github.com/kenowi-dev/hspscraper v0.1.2
-	github.com/kenowi-dev/observer v0.1.0
+	github.com/kenowi-dev/hspscraper v0.1.4
 	github.com/spf13/cobra v1.8.0
 )
 

@@ -3,47 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSP Autologin</title>
+    <title>Sports Website Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Include HTMX library -->
     <script src="https://unpkg.com/htmx.org@1.9.9"></script>
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/index.css"/>
 </head>
-<body>
-<main class="bg-gray-200 min-h-screen flex flex-col px-20 py-10">
-    <h1 class="font-bold text-4xl my-5">Hochschulsport Auto Login</h1>
+<body class="bg-gray-900 text-white font-sans">
 
-    <form hx-post="/login"
-          hx-target="#htmx-detections"
-          hx-swap="innerHTML"
-          hx-on:htmx:response-error="alert('Error on Request')"
-          class="flex flex-col gap-3">
-        <label class="flex flex-row gap-11">
-            Sport:
-            <input class="hover:bg-gray-100 bg-gray-50 focus:outline-none focus:bg-gray-300 p-1" type="text" name="sport" value="">
-        </label>
+<div class="flex items-center min-h-screen p-6 bg-gray-800">
+    <div class="flex-1 max-w-md mx-auto bg-gray-900 rounded-md shadow-md overflow-hidden">
+        <div class="py-4 px-6">
+            <h2 class="text-2xl font-semibold text-gray-200">Sports Website Login</h2>
+            <!-- Rest of the login form -->
+            <form id="loginForm">
+                <!-- Dropdown for available sports -->
+                <div class="mt-4">
+                    <label class="block text-gray-400 text-sm font-bold" for="sportDropdown">Select Sport</label>
+                    <select name="sport" id="sportDropdown" hx-get="/courses" hx-trigger="change" hx-target="#timeSlotDropdown"
+                            class="mt-1 p-2 w-full border rounded-md bg-gray-700 text-white">
+                        <option value="">Select Sport</option>
+                        {{ block "sports.html" . }}
+                        {{ end }}
+                    </select>
+                </div>
 
-        <label class="flex flex-row gap-8">
-            Kurs ID:
-            <input class="hover:bg-gray-100 bg-gray-50 focus:outline-none focus:bg-gray-300 p-1" type="text" name="courseId" value="">
-        </label>
+                <!-- Dropdown for time slots -->
+                <div class="mt-4">
+                    <label class="block text-gray-400 text-sm font-bold" for="timeSlotDropdown">Select Time Slot</label>
+                    <select name="courseNumber" id="timeSlotDropdown" class="mt-1 p-2 w-full border rounded-md bg-gray-700 text-white">
+                        <option value="">Select Time Slot</option>
+                        <!-- Time slots will be populated here dynamically -->
+                    </select>
+                </div>
 
-        <label class="flex flex-row gap-11">
-            Email:
-            <input class="hover:bg-gray-100 bg-gray-50 focus:outline-none focus:bg-gray-300 p-1" type="text" name="email" value="">
-        </label>
+                <div class="mt-4">
+                    <label for="email" class="block text-gray-400 text-sm font-bold">Email</label>
+                    <input id="email" type="email" name="email" class="mt-1 p-2 w-full border rounded-md bg-gray-700 text-white">
+                </div>
 
-        <label class="flex flex-row gap-4">
-            Password:
-            <input class="hover:bg-gray-100 bg-gray-50 focus:outline-none focus:bg-gray-300 p-1" type="password" name="password" value="">
-        </label>
-
-        <button class="btn rounded w-40 hover:bg-gray-100 bg-gray-50 focus:bg-gray-300 p-1" type="submit">Submit</button>
-    </form>
-
-    <div id="htmx-detections">
-    {{ block "auto_login.html" . }}
-    {{ end }}
+                <div class="mt-4">
+                    <label for="password" class="block text-gray-400 text-sm font-bold">Password</label>
+                    <input id="password" type="password" name="password" class="mt-1 p-2 w-full border rounded-md bg-gray-700 text-white">
+                </div>
+                <div class="mt-6 flex flex-row justify-between">
+                    <button hx-post="/registration" hx-trigger="click" hx-target="#registrations" form="loginForm"
+                            class="px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:shadow-outline-blue active:bg-green-800">
+                        See active registration scanners
+                    </button>
+                    <button hx-post="/login" hx-trigger="click" hx-target="#registrations" form="loginForm"
+                            class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                        Login
+                    </button>
+                    <button hx-post="/dev" hx-trigger="click" hx-target="#registrations" form="loginForm"
+                            class="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:shadow-outline-blue active:bg-red-800">
+                        dev
+                    </button>
+                </div>
+            </form>
+            <div id="registrations" class="mt-4"></div>
+        </div>
     </div>
-</main>
+</div>
+
+
 </body>
 </html>

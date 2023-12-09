@@ -1,0 +1,16 @@
+
+<div class="bg-gray-800 p-4 rounded-md mb-4">
+    <h2 class="text-xl font-semibold text-gray-200 mb-2">Your Registrations</h2>
+    <ul>
+        {{range .}}
+            <li class="mb-4">
+                <div class="border rounded p-4 bg-gray-700 text-white">
+                    <h3 class="text-xl font-semibold mb-2">{{.Sport}}</h3>
+                    <p class="mb-1">Course Number: {{.CourseNumber}}</p>
+                    <p class="mb-1">Date: {{.Date.Format "02.01.2006" }}</p>
+                    <p>Email: {{.Email}}</p>
+                </div>
+            </li>
+        {{end}}
+    </ul>
+</div>
