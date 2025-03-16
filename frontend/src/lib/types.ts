@@ -19,3 +19,10 @@ export type Course = {
 }
 
 export type CourseState = "Vormerkliste" | "Warteliste"
+
+
+export type CourseDate = {
+    start: Date
+    end: Date
+    duration: string
+}

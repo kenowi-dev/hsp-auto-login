@@ -51,7 +51,7 @@ func Register(sport, courseNumber, email, pw string, date time.Time) error {
 	}
 
 	node, err := bookingRequestWithReferer(map[string]string{
-		course.bookingID: CourseStateOpen,
+		course.BookingID: CourseStateOpen,
 	}, getHspSportUrl(sport))
 	if err != nil {
 		return err

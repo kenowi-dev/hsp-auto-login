@@ -24,3 +24,18 @@ func CoursesHandlerFunc(w http.ResponseWriter, r *http.Request) {
 
 	writeJson(w, courses)
 }
+
+func CoursesDatesHandlerFunc(w http.ResponseWriter, r *http.Request) {
+	var course hspscraper.Course
+	err := parseBody(r, &course)
+	if err != nil {
+		http.Error(w, "course cannot be parsed", http.StatusBadRequest)
+	}
+
+	dates, err := hspscraper.GetCourseDates(&course)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	writeJson(w, dates)
+}

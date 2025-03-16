@@ -1,17 +1,46 @@
 <script lang="ts">
-    import type { PageProps } from './$types';
-    import type {Course} from "$lib/types";
+    import type {PageProps} from './$types';
+    import type {Course, CourseDate} from "$lib/types";
+    import {formatDateTime, formatNanoseconds, parseDateWithTime} from "$lib/utils";
+    import {formatTime} from "$lib/utils.js";
 
-    let { data }: PageProps = $props();
+    let {data}: PageProps = $props();
 
 
     let selectedSport: string = $state("")
+    let selectedCourseID: string = $state("")
+
     let courses: Course[] = $state([])
+    let dates: CourseDate[] = $state([])
+
+
     async function getCourses() {
         const response = await fetch(`/api/courses?sport=${selectedSport}`)
         const json = await response.json()
-        console.log(json)
         courses = json as Course[]
+    }
+
+    async function getCourseDates() {
+
+        let couse = courses.find(value => value.id === selectedCourseID)
+        if (!couse) {
+            console.error("Course not found: ", selectedCourseID)
+            return
+        }
+
+        const response = await fetch(`/api/coursesDates`, {
+            method: "POST",
+            body: JSON.stringify(couse)
+        })
+        const json = await response.json() as { date: string; duration: number }[]
+        dates = json.map(value => {
+            const when = parseDateWithTime(value.date, couse.time)
+            return {
+                start: when[0],
+                end: when[1],
+                duration: formatNanoseconds(value.duration)
+            }
+        })
     }
 </script>
 
@@ -39,35 +68,39 @@
                 <!-- Dropdown for courses -->
                 <div class="mt-4">
                     <label class="block text-gray-400 text-sm font-bold" for="coursesDropdown">Select Course</label>
-                    <select name="courseNumber"
-                            id="coursesDropdown"
+                    <select bind:value={selectedCourseID}
+                            onchange={getCourseDates}
                             class="mt-1 p-2 w-full border rounded-md bg-gray-700 text-white">
                         <option value="" disabled>Select Course</option>
                         {#each courses as course}
-                            <option value={course.id}>{course.number}>{course.number} -- {course.details} -- {course.day} -- {course.time}</option>
+                            <option value={course.id}>
+                                {course.number} -- {course.details} -- {course.day}-- {course.time}
+                            </option>
                         {/each}
-
-                        <!-- Courses will be populated here dynamically -->
                     </select>
                 </div>
 
                 <!-- Dropdown for time slots -->
                 <div class="mt-4">
                     <label class="block text-gray-400 text-sm font-bold" for="timeSlotDropdown">Select Time Slot</label>
-                    <select name="courseNumber" id="timeSlotDropdown" class="mt-1 p-2 w-full border rounded-md bg-gray-700 text-white">
-                        <option value="">Select Time Slot</option>
-                        <!-- Time slots will be populated here dynamically -->
+                    <select class="mt-1 p-2 w-full border rounded-md bg-gray-700 text-white">
+                        <option value="" disabled>Select Time Slot</option>
+                        {#each dates as date}
+                            <option>{formatDateTime(date.start)} - {formatTime(date.end)}</option>
+                        {/each}
                     </select>
                 </div>
 
                 <div class="mt-4">
                     <label for="email" class="block text-gray-400 text-sm font-bold">Email</label>
-                    <input id="email" type="email" name="email" class="mt-1 p-2 w-full border rounded-md bg-gray-700 text-white">
+                    <input id="email" type="email" name="email"
+                           class="mt-1 p-2 w-full border rounded-md bg-gray-700 text-white">
                 </div>
 
                 <div class="mt-4">
                     <label for="password" class="block text-gray-400 text-sm font-bold">Password</label>
-                    <input id="password" type="password" name="password" class="mt-1 p-2 w-full border rounded-md bg-gray-700 text-white">
+                    <input id="password" type="password" name="password"
+                           class="mt-1 p-2 w-full border rounded-md bg-gray-700 text-white">
                 </div>
                 <div class="mt-6 flex flex-row justify-between">
                     <button form="loginForm"

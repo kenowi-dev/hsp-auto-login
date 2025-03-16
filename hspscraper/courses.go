@@ -36,22 +36,22 @@ const (
 )
 
 type Course struct {
-	Number     string `json:"number"`
-	Details    string `json:"details"`
-	Day        string `json:"day"`
-	Time       string `json:"time"`
-	Location   string `json:"location"`
-	id         string
+	Number     string      `json:"number"`
+	Details    string      `json:"details"`
+	Day        string      `json:"day"`
+	Time       string      `json:"time"`
+	Location   string      `json:"location"`
+	Id         string      `json:"id"`
 	Management string      `json:"management"`
 	Price      string      `json:"price"`
 	State      CourseState `json:"state"`
-	bookingID  string
+	BookingID  string      `json:"bookingId"`
 }
 
 type CourseDate struct {
-	Date     time.Time
-	Duration *time.Duration
-	Updated  time.Time
+	Date     time.Time      `json:"date"`
+	Duration *time.Duration `json:"duration"`
+	Updated  time.Time      `json:"updated"`
 }
 
 func FindCourse(sport string, courseNumber string) (*Course, error) {
@@ -76,7 +76,7 @@ func GetAllCourses(sport *Sport) ([]*Course, error) {
 }
 
 func GetCourseDates(couse *Course) ([]CourseDate, error) {
-	return parseDates(fmt.Sprintf(hspCourseDatesTemplate, couse.id))
+	return parseDates(fmt.Sprintf(hspCourseDatesTemplate, couse.Id))
 }
 
 func getAllCourses(sport *Sport) ([]*Course, error) {
@@ -145,8 +145,8 @@ func parseCourseRow(tr *html.Node) (*Course, error) {
 	}
 
 	course := Course{
-		id:         id,
-		bookingID:  bookingID,
+		Id:         id,
+		BookingID:  bookingID,
 		Number:     number,
 		Details:    details,
 		Day:        day,
