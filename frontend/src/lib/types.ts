@@ -18,7 +18,7 @@ export type Course = {
     bookingID: string;
 }
 
-export type CourseState = "Vormerkliste" | "Warteliste"
+export type CourseState = "Vormerkliste" | "Warteliste" | "buchen"
 
 
 export type CourseDate = {

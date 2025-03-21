@@ -5,6 +5,7 @@ go 1.24
 require (
 	github.com/antchfx/htmlquery v1.3.4
 	github.com/antchfx/xpath v1.3.3
+	github.com/google/uuid v1.6.0
 	golang.org/x/net v0.37.0
 )
 

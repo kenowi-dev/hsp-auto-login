@@ -29,11 +29,8 @@ var (
 	xPathConfirmation     = xpath.MustCompile("//div[@class='content']/div/span[1]/text()")
 )
 
-func Register(sport, courseNumber, email, pw string, date time.Time) error {
+func Register(course Course, sport string, email string, pw string, date time.Time) error {
 
-	if courseNumber == "" {
-		return errors.New("courseNumber cannot be empty")
-	}
 	if sport == "" {
 		return errors.New("sport cannot be empty")
 	}
@@ -44,10 +41,6 @@ func Register(sport, courseNumber, email, pw string, date time.Time) error {
 
 	if pw == "" {
 		return errors.New("password cannot be empty")
-	}
-	course, err := FindCourse(sport, courseNumber)
-	if err != nil {
-		return err
 	}
 
 	node, err := bookingRequestWithReferer(map[string]string{
@@ -70,8 +63,11 @@ func Register(sport, courseNumber, email, pw string, date time.Time) error {
 	}
 
 	inputValue := getValue(node, xPathTimeSlot)
-	if inputValue != "buchen" {
-		return errors.New(fmt.Sprintf("date not found or cannot be booked. State is %s", inputValue))
+	if inputValue == "" {
+		return errors.New(fmt.Sprintf("date not found %s", timeSlot))
+	}
+	if inputValue != CourseStateBook {
+		return errors.New(fmt.Sprintf("Booking not available. State is %s", inputValue))
 	}
 
 	_, err = bookingRequest(map[string]string{

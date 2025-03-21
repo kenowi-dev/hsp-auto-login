@@ -33,6 +33,7 @@ type CourseState string
 const (
 	CourseStateOpen        = "Vormerkliste"
 	CourseStateWaitingList = "Warteliste"
+	CourseStateBook        = "buchen"
 )
 
 type Course struct {

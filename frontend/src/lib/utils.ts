@@ -61,13 +61,14 @@ export function parseTimeRange(timeRange: string): [ start: Date, end: Date ] {
 export function parseDateWithTime(dateString: string, timeRange: string): [ start: Date, end: Date ] {
     const startDate = new Date(dateString);
     const endDate = new Date(dateString);
-
     const [startTime, endTime] = parseTimeRange(timeRange)
+    return [ combineDateAndTime(startDate, startTime), combineDateAndTime(endDate, endTime) ];
+}
 
-    // Set the hours and minutes for the parsed date
-    startDate.setTime(startTime.getTime())
+export function combineDateAndTime(date: Date, time: Date) {
+    const timeString = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
 
-    endDate.setTime(endTime.getTime())
-
-    return [ startDate, endDate ];
+    // Jan is 0, dec is 11
+    const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    return  new Date(`${dateString} ${timeString}`);
 }

@@ -16,6 +16,7 @@ func main() {
 	mux.HandleFunc("/api/sports", api.SportsHandlerFunc)
 	mux.HandleFunc("/api/courses", api.CoursesHandlerFunc)
 	mux.HandleFunc("/api/coursesDates", api.CoursesDatesHandlerFunc)
+	mux.HandleFunc("/api/register", api.RegisterHandlerFunc)
 
 	log.Printf("App running on %s...\n", strconv.Itoa(port))
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(port), mux))
