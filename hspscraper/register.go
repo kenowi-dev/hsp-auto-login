@@ -70,6 +70,7 @@ func Register(course Course, sport string, email string, pw string, date time.Ti
 		return errors.New(fmt.Sprintf("Booking not available. State is %s", inputValue))
 	}
 
+	time.Sleep(500 * time.Millisecond)
 	_, err = bookingRequest(map[string]string{
 		"fid":       fid,
 		timeSlotKey: "buchen",
@@ -78,6 +79,7 @@ func Register(course Course, sport string, email string, pw string, date time.Ti
 		return err
 	}
 
+	time.Sleep(500 * time.Millisecond)
 	node, err = bookingRequest(map[string]string{
 		"fid":           fid,
 		"Termin":        timeSlot,
@@ -107,6 +109,8 @@ func Register(course Course, sport string, email string, pw string, date time.Ti
 		err = errors.Join(err, errors.New("maybe email and password are wrong"))
 		return err
 	}
+
+	time.Sleep(500 * time.Millisecond)
 	node, err = bookingRequest(regData)
 	if err != nil {
 		return err
@@ -124,15 +128,17 @@ func Register(course Course, sport string, email string, pw string, date time.Ti
 	if err != nil {
 		return err
 	}
+
+	time.Sleep(500 * time.Millisecond)
 	node, err = bookingRequest(regData)
 	if err != nil {
 		return err
 	}
 
-	bookgingErrorMsgNode := htmlquery.QuerySelector(node, xPathBuchungsErrorMsg)
-	if bookgingErrorMsgNode == nil || bookgingErrorMsgNode.Data != "" {
+	bookingErrorMsgNode := htmlquery.QuerySelector(node, xPathBuchungsErrorMsg)
+	if bookingErrorMsgNode != nil && bookingErrorMsgNode.Data != "" {
 		// Booking error
-		err = errors.New("booking unsuccessful")
+		err = errors.New(fmt.Sprintf("booking unsuccessful: %s", bookingErrorMsgNode.Data))
 		bookingLink := getAtrValue(node, xPathBuchungsLink, "href")
 		if bookingLink != "" {
 			// Already Registered, bookingLink contains the confirmation link

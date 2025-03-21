@@ -57,7 +57,11 @@
                 password: password
             })
         })
-        error = await response.text()
+        if (!response.ok) {
+            error = await response.text()
+        } else {
+            window.alert("YEY")
+        }
     }
 </script>
 
